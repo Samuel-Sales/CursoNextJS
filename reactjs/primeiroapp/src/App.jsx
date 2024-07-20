@@ -3,21 +3,20 @@ import { useState } from "react";
 
 
 function App() {
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [idade, setIdade] = useState('');
+  const [input, setInput] = useState('');
+  const [tarefas, setTarefas] = useState([
+    'Pagar a conta de luz',
+    'Estudar React JS'
+  ]);
 
   const [user, setUser] = useState({});
 
   function handleRegister(e) {
     e.preventDefault();
-    alert('Usuario registrado com sucesso')
 
-    setUser({
-      nome: nome,
-      idade: idade,
-      email: email
-    })
+    // Pego todos dados que tem tarefas e adiciono mais os dados que tem em input
+    setTarefas([...tarefas, input]);
+    setInput('');
   }
 
   return (
@@ -25,22 +24,20 @@ function App() {
       <h1>Cadastrando Usuario</h1>
 
       <form onSubmit={handleRegister}>
-        <label>Nome: </label><br />
-        <input type="text" value={nome} placeholder="Digite seu nome" onChange={ (e) => setNome(e.target.value) } />
-        <label>Email: </label>
-        <input type="text" value={email} placeholder="Digite seu email" onChange={ (e) => setEmail(e.target.value) } /> <br />
-        <label>Idade: </label><br />
-        <input type="text" value={idade} placeholder="Digite sua idade" onChange={ (e) => setIdade(e.target.value) }/> <br />
-
+        <label>Nome da tarefa: </label><br />
+        <input type="text" value={input} placeholder="Digite uma tarefa" onChange={ (e) => setInput(e.target.value) } />
+        
         <button type="submit">Registrar</button>
       </form>
 
       <br />
-      <div>
-        <span>Bem vindo: {user.nome}</span> <br />
-        <span>Idade: {user.idade}</span> <br />
-        <span>Email: {user.email}</span>
-      </div>
+      <ul>
+        {tarefas.map( tarefa => (
+          <li key={tarefa}>
+            {tarefa}
+          </li>
+        ) )}
+      </ul>
     </div>
   )
 }
