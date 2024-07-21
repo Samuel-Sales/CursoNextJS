@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -9,7 +9,17 @@ function App() {
     'Estudar React JS'
   ]);
 
-  const [user, setUser] = useState({});
+  useEffect(() => {
+    const tarefasStorage = localStorage.getItem('@tarefa');
+
+    if (tarefasStorage) {
+      setTarefas(JSON.parse(tarefasStorage))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('@tarefa', JSON.stringify(tarefas))
+  }, [tarefas])
 
   function handleRegister(e) {
     e.preventDefault();
